@@ -1,0 +1,8 @@
+Change values in the uncleaned features set
+
+# feature / nb bad values / replacement value
+# get_sections_start_var 3 - mean = 6392
+# get_bars_start_var 4 - mean = 5459
+# get_beats_start_var 4 - mean = 5532
+# get_song_hotttnesses 507 - mean = 0.5
+# get_year 500 - mean = 1998
