@@ -39,6 +39,10 @@ def open_h5_file_read(h5filename):
     return tables.open_file(h5filename, mode='r')
 
 
+def get_root_metadata_songs_cols(h5):
+    return h5.root.metadata.songs.cols
+
+
 def get_num_songs(h5):
     """
     Return the number of songs contained in this h5 file, i.e. the number of rows
