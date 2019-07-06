@@ -1,6 +1,5 @@
 # data directory (to heavy to be pushed)
 data/MillionSongSubset/*
-data/SongsFeatures/*
 data/UserTaste/*
 
 # Byte-compiled / optimized / DLL files

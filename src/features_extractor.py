@@ -78,7 +78,7 @@ def features_extractor(save, nb_elements=2939):
 
     # create and save dataframe
     df = pd.DataFrame(data=stock, columns=stock_features_name)
-    df.to_csv(path_or_buf=save, index=False)
+    # df.to_csv(path_or_buf=save, index=False)
 
 
 
