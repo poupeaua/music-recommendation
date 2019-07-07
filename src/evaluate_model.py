@@ -121,7 +121,7 @@ def evaluate_model(m, k, t, n,
         mean average precision.
 
         Arguments:
-            m (int) : minimum number of users
+            m (int) : minimum number of songs for each user (which dataset to choose)
             k (int) : number of clusters
             t (int) : number of songs in each test set
                 - constraint t < m/2
@@ -140,6 +140,16 @@ def evaluate_model(m, k, t, n,
     """
     if t >= m/2:
         raise RuntimeError("t >= m/2")
+
+    # explain what is going on
+    print("==============================================================================")
+    print("===== Compute a metric to evaluate the recommendation unsupervised model =====")
+    print("==============================================================================\n")
+    print("Information :")
+    print("     |-> m - Minimum number of songs per user :", m)
+    print("     |-> k - Number of clusters :", k)
+    print("     |-> t - Number of songs in the validation set for each user :", t)
+    print("     |-> n - Number of closest songs chosen for each cluster centers :", n, "\n")
 
     # get paths
     user_df_path = os.path.join(PROJECT_ABSPATH, "data/UserTasteFiltered/min_users_" + str(m) +"_taste_triplets.txt")
@@ -183,14 +193,23 @@ def evaluate_model(m, k, t, n,
                                              avg_on_cluster=avg_on_cluster)
         stock[i] = average_precision
     mean_average_precision = np.mean(stock)
+    print("mAP = " + str(round(mean_average_precision*100, 2)) + "%")
     return mean_average_precision
+
 
 
 if __name__ == "__main__":
     # evaluate the model
-    # m (min_nb_songs_per_users) [5, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    # m (min_nb_songs_per_users) choose among [5, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     m = 20
     t = int(m/2)-1
+    # REMARKS :
+    # method = [basic, one_if_any] => one_if_any prefered to get better results
+    # avg_on_cluster better use False in order to make average_precision = 1
+    #   if any of the cluster recommend a music that makes sense for the user
+    # if n is bigger the mAP is bigger
+    # if k is bigger the mAP is bigger
+    # seems like if m is bigger the mAP is bigger
     mean_average_precision = evaluate_model(m=m,
                                             k=6,
                                             n=25,
@@ -199,4 +218,3 @@ if __name__ == "__main__":
                                             min_variance_explained=0.999,
                                             method="one_if_any",
                                             avg_on_cluster=False)
-    print("mAP = " + str(round(mean_average_precision*100, 2)) + "%")
