@@ -171,6 +171,7 @@ def evaluate_model(m, k, t, n,
     # useful data information
     unique_user_id = df_users.user_id.unique()
     nb_users = len(unique_user_id)
+    print("Number of users :", nb_users)
 
     # calculating mAP
     stock = np.zeros(shape=nb_users)
